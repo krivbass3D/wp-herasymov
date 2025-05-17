@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  wordpress:
+    image: wordpress:6.5-apache
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress_hersimov
+      WORDPRESS_DB_USER: wordpress_hersimov
+      WORDPRESS_DB_PASSWORD: wordpress_hersimov
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wordpress_hersimov
+      MYSQL_USER: wordpress_hersimov
+      MYSQL_PASSWORD: wordpress_hersimov
+      MYSQL_ROOT_PASSWORD: root_hersimov
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
