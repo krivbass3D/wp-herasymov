@@ -1,15 +1,13 @@
-version: '3.7'
-
 services:
   wordpress:
     image: wordpress:6.5-apache
     ports:
       - "8000:80"
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: wordpress_hersimov
-      WORDPRESS_DB_USER: wordpress_hersimov
-      WORDPRESS_DB_PASSWORD: wordpress_hersimov
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
     volumes:
       - ./wp-content:/var/www/html/wp-content
     depends_on:
@@ -18,10 +16,10 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: wordpress_hersimov
-      MYSQL_USER: wordpress_hersimov
-      MYSQL_PASSWORD: wordpress_hersimov
-      MYSQL_ROOT_PASSWORD: root_hersimov
+      MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
+      MYSQL_USER: ${WORDPRESS_DB_USER}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
 
